@@ -70,7 +70,6 @@ class _loginscreenState extends State<loginscreen> {
                       onTap: _togglePasswordView,
                     child: isHiddenPassword ? Icon(Icons.visibility_off) : Icon(Icons.visibility)
                     )),
-
               ),
               SizedBox(
                 height: 24.0,
