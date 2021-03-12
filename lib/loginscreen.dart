@@ -12,6 +12,7 @@ class loginscreen extends StatefulWidget {
 
 class _loginscreenState extends State<loginscreen> {
   bool showSpinner = false;
+  bool isHiddenPassword=true;
  String email;
   String password;
   Future<bool> getstatus(String email,String pass) async {
@@ -58,13 +59,18 @@ class _loginscreenState extends State<loginscreen> {
                 height: 8.0,
               ),
               TextField(
-                obscureText: true,
+                obscureText: isHiddenPassword,
                 textAlign: TextAlign.center,
                 onChanged: (value) {
                   password = value;
                 },
                 decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Enter your password'),
+                    hintText: 'Enter your password',
+                    suffixIcon:InkWell(
+                      onTap: _togglePasswordView,
+                    child: isHiddenPassword ? Icon(Icons.visibility_off) : Icon(Icons.visibility)
+                    )),
+
               ),
               SizedBox(
                 height: 24.0,
@@ -113,6 +119,11 @@ catch (e) {
         ),
       ),
     );
+  }
+  void _togglePasswordView() {
+    setState(() {
+      isHiddenPassword=!isHiddenPassword;
+    });
   }
 }
 

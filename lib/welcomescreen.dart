@@ -57,7 +57,7 @@ class _welcomescreenState extends State<welcomescreen>
                   ),
                 ),
                 TypewriterAnimatedTextKit(
-                  text: ['SKILLBANC'],
+                  text: [' ROTARY'],
                   textStyle: TextStyle(
                     fontSize: 45.0,
                     fontWeight: FontWeight.w900,
