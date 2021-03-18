@@ -12,11 +12,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         initialRoute: welcomescreen.id,
         routes: {
-    welcomescreen.id: (context) => welcomescreen(),
-    loginscreen.id: (context) => loginscreen(),
-    registrationscreen.id: (context) => registrationscreen(),
-    activityscreen.id: (context) => activityscreen(),
-    }
+          welcomescreen.id: (context) => welcomescreen(),
+          loginscreen.id: (context) => loginscreen(),
+          registrationscreen.id: (context) => registrationscreen(),
+          activityscreen.id: (context) => activityscreen(),
+        }
     );
   }
 }

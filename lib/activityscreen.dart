@@ -11,15 +11,15 @@ class activityscreen extends StatefulWidget {
 }
 
 class _activityscreenState extends State<activityscreen> {
-bool spinner=false;
+  bool spinner=false;
   void updateUI() async {
     NetworkHelper networkHelper = NetworkHelper(
         'https://skillbanc.com/ObjectTag/SearchPost?sessionId=d3192ad5-3532-40ce-8133-10984d43655c&cname=Task App&oname=samy.balaharish@gmail.com&c2name=Task&App ID=IP App');
-     data = await networkHelper.getData();
+    data = await networkHelper.getData();
     count=data['count'];
   }
   @override
- void initState()  {
+  void initState()  {
     super.initState();
     updateUI();
   }
@@ -30,11 +30,11 @@ bool spinner=false;
           body:ModalProgressHUD(
             inAsyncCall: spinner,
             child: Container(
-                margin: EdgeInsets.all(15.0),
-                decoration: BoxDecoration(
-                  color: Colors.black12,
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
+              margin: EdgeInsets.all(15.0),
+              decoration: BoxDecoration(
+                color: Colors.black12,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -42,7 +42,7 @@ bool spinner=false;
                   Text("number of task:  $count",style:kSendButtonTextStyle,),
                   Column(
                     children: [
- // taskstream(),
+                      // taskstream(),
                     ],
                   )
                 ],
@@ -51,7 +51,7 @@ bool spinner=false;
           ));
   }
 
-  }
+}
 class taskstream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -59,10 +59,10 @@ class taskstream extends StatelessWidget {
       builder: (context, snapshot) {
         List<Widget> tasks = [];
         for(int i=0;i<count;i++) {
-String tep=data['result']['Objects'][i]['O2Name'];
-Widget temp=Text("$tep");
-tasks.add(temp);
-}
+          String tep=data['result']['Objects'][i]['O2Name'];
+          Widget temp=Text("$tep");
+          tasks.add(temp);
+        }
         return Expanded(
           child: ListView(
             reverse: true,

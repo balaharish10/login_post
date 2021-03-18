@@ -13,19 +13,19 @@ class loginscreen extends StatefulWidget {
 class _loginscreenState extends State<loginscreen> {
   bool showSpinner = false;
   bool isHiddenPassword=true;
- String email;
+  String email;
   String password;
   Future<bool> getstatus(String email,String pass) async {
     NetworkHelper networkHelper = NetworkHelper(
-        'https://skillbanc.com/Account/LoginPost?UserName=$email&Password=$pass&appName=Skillbanc&mode=Login');
+        'https://skillbanc.com/Account/LoginPost?UserName=${email.replaceAll(' ', '')}&Password=$pass&appName=Skillbanc&mode=Login');
+
     var data = await networkHelper.getData();
     return data['successful'];
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Padding(
@@ -67,8 +67,8 @@ class _loginscreenState extends State<loginscreen> {
                 decoration: kTextFieldDecoration.copyWith(
                     hintText: 'Enter your password',
                     suffixIcon:InkWell(
-                      onTap: _togglePasswordView,
-                    child: isHiddenPassword ? Icon(Icons.visibility_off) : Icon(Icons.visibility)
+                        onTap: _togglePasswordView,
+                        child: isHiddenPassword ? Icon(Icons.visibility_off) : Icon(Icons.visibility)
                     )),
               ),
               SizedBox(
@@ -81,36 +81,36 @@ class _loginscreenState extends State<loginscreen> {
                   setState(() {
                     showSpinner = true;
                   });
-final bool status=await getstatus(email, password);
-try {
-  if (status == true) {
-    Navigator.pushNamed(context, activityscreen.id);
-  }
-  else
-    {
-      showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text("invalid username or password"),
-          content: Text("Enter valid credentials"),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(ctx).pop();
-              },
-              child: Text("okay"),
-            ),
-          ],
-        ),
-      );
-    }
-  setState(() {
-    showSpinner = false;
-  });
-}
-catch (e) {
-  print(e);
-}
+                  final bool status=await getstatus(email, password);
+                  try {
+                    if (status == true) {
+                      Navigator.pushNamed(context, activityscreen.id);
+                    }
+                    else
+                    {
+                      showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          title: Text("invalid username or password"),
+                          content: Text("Enter valid credentials"),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(ctx).pop();
+                              },
+                              child: Text("okay"),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                    setState(() {
+                      showSpinner = false;
+                    });
+                  }
+                  catch (e) {
+                    print(e);
+                  }
                 },
               ),
             ],
