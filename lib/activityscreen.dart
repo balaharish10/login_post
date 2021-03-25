@@ -16,66 +16,45 @@ class _activityscreenState extends State<activityscreen> {
     NetworkHelper networkHelper = NetworkHelper(
         'https://skillbanc.com/ObjectTag/SearchPost?sessionId=d3192ad5-3532-40ce-8133-10984d43655c&cname=Task App&oname=samy.balaharish@gmail.com&c2name=Task&App ID=IP App');
     data = await networkHelper.getData();
-    count=data['count'];
+    setState(() {
+      count=data['count'];
+    });
+
   }
   @override
   void initState()  {
     super.initState();
     updateUI();
+
   }
   @override
   Widget build(BuildContext context) {
     return
       Scaffold(
-          body:ModalProgressHUD(
-            inAsyncCall: spinner,
-            child: Container(
-              margin: EdgeInsets.all(15.0),
-              decoration: BoxDecoration(
-                color: Colors.black12,
-                borderRadius: BorderRadius.circular(10.0),
+        appBar: AppBar(
+          title: Text("number of task : $count"),
+
+        ),
+        body: GridView.count(
+          // Create a grid with 2 columns. If you change the scrollDirection to
+          // horizontal, this produces 2 rows.
+          crossAxisCount: 1,
+          // Generate 100 widgets that display their index in the List.
+          children: List.generate(count, (index) {
+            return Center(
+              child: Text(
+               data['result']['Objects'][index]['O2Name'],
+                style: Theme.of(context).textTheme.headline5,
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text("number of task:  $count",style:kSendButtonTextStyle,),
-                  Column(
-                    children: [
-                      // taskstream(),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ));
+            );
+          }),
+        ),
+          );
   }
 
 }
-class taskstream extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-      builder: (context, snapshot) {
-        List<Widget> tasks = [];
-        for(int i=0;i<count;i++) {
-          String tep=data['result']['Objects'][i]['O2Name'];
-          Widget temp=Text("$tep");
-          tasks.add(temp);
-        }
-        return Expanded(
-          child: ListView(
-            reverse: true,
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-            children: tasks,
-          ),
-        );
-      },
-    );
-  }
-}
 
 
-
+// ['result']['Objects'][i]['O2Name'];
 
 
