@@ -6,6 +6,7 @@ import 'rounded_button.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 class registrationscreen extends StatefulWidget {
   static String id="reg screen";
+
   @override
   _registrationscreenState createState() => _registrationscreenState();
 }
@@ -16,10 +17,14 @@ class _registrationscreenState extends State<registrationscreen> {
   String email;
   String confirmPassword;
   String password;
-  Future<bool> getstatus(String email,String pass) async {
-    NetworkHelper networkHelper = NetworkHelper(
-        'https://skillbanc.com/Account/LoginPost?UserName=${email.replaceAll(' ', '')}&Password=$pass&appName=Skillbanc&mode=Register');
-    var data = await networkHelper.getData();
+  String ses1;
+  Future<bool> getstatus(String email,String pass)  {
+    setState(() async{
+      NetworkHelper networkHelper = NetworkHelper(
+          'https://skillbanc.com/Account/LoginPost?UserName=${email.replaceAll(' ', '')}&Password=$pass&appName=Skillbanc&mode=Register');
+      var data = await networkHelper.getData();
+      ses1=data['id'];
+    });
     return data['successful'];
   }
 

@@ -1,25 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:login_post/activityscreen.dart';
 import 'package:login_post/networking.dart';
+import 'package:login_post/registrationscreen.dart';
 import 'constants.dart';
 import 'rounded_button.dart';
+import 'activityscreen.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:flutter_session/flutter_session.dart';
+
 class loginscreen extends StatefulWidget {
   static String id="login screen";
+
+
   @override
   _loginscreenState createState() => _loginscreenState();
 }
 
 class _loginscreenState extends State<loginscreen> {
+
   bool showSpinner = false;
   bool isHiddenPassword=true;
   String email;
   String password;
-  Future<bool> getstatus(String email,String pass) async {
-    NetworkHelper networkHelper = NetworkHelper(
-        'https://skillbanc.com/Account/LoginPost?UserName=${email.replaceAll(' ', '')}&Password=$pass&appName=Skillbanc&mode=Login');
+  static String session_id;
+  Future<bool> getstatus(String email,String pass)  async{
 
-    var data = await networkHelper.getData();
+      NetworkHelper networkHelper = NetworkHelper(
+          'https://skillbanc.com/Account/LoginPost?UserName=${email.replaceAll(' ', '')}&Password=$pass&appName=Skillbanc&mode=Login');
+      var data = await networkHelper.getData();
+      session_id=data['id'];
+      var session = FlutterSession();
+      await session.set("token", session_id);
+      await session.set("email_id", email);
+
+
     return data['successful'];
   }
   @override
